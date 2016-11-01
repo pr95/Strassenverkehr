@@ -1,4 +1,6 @@
-#include "Fahrzeug.h"
+#include "PKW.h"
+#include "Fahrrad.h"
+#include <vector>
 
 //Uhr initialisieren (global)
 double dGlobaleZeit = 0.0;
@@ -86,10 +88,64 @@ void vAufgabe_1_deb()
 
 }
 
+void vAufgabe_2()
+{
+	int iAnzahlPKW, iAnzahlFahrrad;
+	
+	//Anzahl PKWs und Fahrräder einlesen
+	cout << "Wie viele PKWs moechten Sie erstellen?" << endl;
+	cin >> iAnzahlPKW;
+	cout << "Wie viele Fahrraeder moechten sie erstellen?" << endl;
+	cin >> iAnzahlFahrrad;
+
+	//Vektor erstellen
+	vector<Fahrzeug*> vecFahrzeuge;
+
+	//PKWs erstellen und in Vektor schieben
+	for (int i = 0; i < iAnzahlPKW; i++)
+	{
+		PKW* tempPKW = new PKW("PKW" + to_string(i+1), 50, 20);
+		vecFahrzeuge.push_back(tempPKW);
+	}
+
+	//Fahrräder erstellen und in Vektor schieben
+	for (int i = 0; i < iAnzahlFahrrad; i++)
+	{
+		Fahrrad* tempFR = new Fahrrad("Fahrrad" + to_string(i + 1), 25);
+		vecFahrzeuge.push_back(tempFR);
+	}
+
+	//Tabellenkopf
+	cout << endl << "ID  Name   :  MaxKmh  AktKmh   GesamtStrecke  GesamtVerbrauch  AktTankinhalt " << endl;
+	cout << setw(42) << setfill('+') << " " << endl;
+	
+	//Fahrzeuge abfertigen und ausgeben
+	for (double d = 0.0; d < 8; d += 0.1)
+	{
+		dGlobaleZeit = d;
+		cout << "Nach " << dGlobaleZeit << "h:" << endl;
+
+		for (int i = 0; i < vecFahrzeuge.size(); i++)
+		{
+			vecFahrzeuge[i]->vAbfertigung();
+
+			if (fabs(dGlobaleZeit-3) < 0.001)
+			{
+				vecFahrzeuge[i]->dTanken(666);
+			}
+
+			vecFahrzeuge[i]->vAusgabe();
+			cout << endl;
+		}
+		cout << endl;
+	}
+}
+
 int main()
 {
-	vAufgabe_1();
+	//vAufgabe_1();
 	//vAufgabe_1_deb();
+	vAufgabe_2();
 	getchar();
 	return 0;
 }

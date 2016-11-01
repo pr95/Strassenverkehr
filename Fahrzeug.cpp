@@ -2,33 +2,37 @@
 
 int Fahrzeug::p_iMaxID = 1;
 
+//Standardkonstruktor
 Fahrzeug::Fahrzeug()
 {
 	vInitialisierung();
 
-	cout << "Fahrzeug Name: " << p_iID << " " << p_sName << endl;
+	//cout << "Fahrzeug Name: " << p_iID << " " << p_sName << endl;
 }
 
-Fahrzeug::Fahrzeug(string aName)
+//Konstruktor mit Name
+Fahrzeug::Fahrzeug(string sName)
 {
 	vInitialisierung();
-	p_sName = aName;
+	p_sName = sName;
 
-	cout << "Fahrzeug Name: " <<  p_iID << " " << p_sName << endl;
+	//cout << "Fahrzeug Name: " <<  p_iID << " " << p_sName << endl;
 }
 
-Fahrzeug::Fahrzeug(string aName, double aMaxGeschwindigkeit)
+//Konstruktor mit Name und MaxGeschwindigkeit
+Fahrzeug::Fahrzeug(string sName, double dMaxGeschwindigkeit)
 {
 	vInitialisierung();
-	p_sName = aName;
-	p_dMaxGeschwindigkeit = aMaxGeschwindigkeit;
+	p_sName = sName;
+	p_dMaxGeschwindigkeit = dMaxGeschwindigkeit;
 
-	cout << "Fahrzeug Name: " << p_iID << " " << p_sName << endl;
+	//cout << "Fahrzeug Name: " << p_iID << " " << p_sName << endl;
 }
 
+//Virtueller Destruktor
 Fahrzeug::~Fahrzeug()
 {
-	cout << "Fahrzeug " << p_iID << " " << p_sName << " wird geloescht" << endl;
+	//cout << "Fahrzeug " << p_iID << " " << p_sName << " wird geloescht" << endl;
 }
 
 /*
@@ -52,8 +56,8 @@ Ausgabe der Objektdaten in formatierter Form
 void Fahrzeug::vAusgabe()
 {
 	cout << setw(4) << resetiosflags(ios::right) << setiosflags(ios::left) << setfill(' ') 
-		<< p_iID << setw(7) << setfill(' ') << p_sName << ":" << resetiosflags(ios::left) << setiosflags(ios::right) 
-		<< setw(8) << setfill(' ') << p_dMaxGeschwindigkeit << setw(11) << setfill(' ') << p_dGesamtStrecke;
+		<< p_iID << setw(9) << setfill(' ') << p_sName << ":" << resetiosflags(ios::left) << setiosflags(ios::right) 
+		<< setw(8) << setfill(' ') << p_dMaxGeschwindigkeit << setw(8) << setfill(' ') << this->dGeschwindigkeit() << setw(11) << setfill(' ') << p_dGesamtStrecke;
 }
 
 /*
@@ -65,11 +69,23 @@ void Fahrzeug::vAbfertigung()
 	if (dGlobaleZeit == p_dZeit && dGlobaleZeit != 0.0)
 	{
 		cout << "Dieses Fahrzeug wurde bereits abgefertigt in diesem Zeitschritt" << endl;
+		return;
 	}
 	else
 	{
-		p_dGesamtStrecke = (dGlobaleZeit*p_dMaxGeschwindigkeit);
+		p_dGesamtStrecke += gZeitschritt * this->dGeschwindigkeit();
 	}
 	
 	p_dZeit = dGlobaleZeit;
+}
+
+//Default Funktion für alle Tochterklassen
+double Fahrzeug::dTanken(double dMenge)
+{
+	return 0;
+}
+
+double Fahrzeug::dGeschwindigkeit()
+{
+	return p_dMaxGeschwindigkeit;
 }

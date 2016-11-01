@@ -2,6 +2,9 @@
 #include <string>
 #include <iostream>
 #include <iomanip>
+#include <math.h>
+#define gZeitschritt 0.1
+
 using namespace std;
 
 extern double dGlobaleZeit;
@@ -9,22 +12,29 @@ extern double dGlobaleZeit;
 class Fahrzeug
 {
 public:
+	//Konstruktor und Destruktor
 	Fahrzeug();
 	Fahrzeug(string);
 	Fahrzeug(string, double);
-	void vAusgabe();
-	void vAbfertigung();
-	~Fahrzeug();
+	virtual ~Fahrzeug();
+	
+	//Methoden
+	virtual void vAusgabe();
+	virtual void vAbfertigung();
+	virtual double dTanken(double dMenge = 666);
 
 private:
+	static int p_iMaxID;
+	void vInitialisierung();
+
+protected:
 	string p_sName;
 	int p_iID;
-	static int p_iMaxID;
 	double p_dMaxGeschwindigkeit;
 	double p_dGesamtStrecke;
 	double p_dGesamtZeit;
 	double p_dZeit;
 
-	void vInitialisierung();
+	virtual double dGeschwindigkeit();
 };
 
