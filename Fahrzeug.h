@@ -22,6 +22,7 @@ public:
 	virtual void vAusgabe();
 	virtual void vAbfertigung();
 	virtual double dTanken(double dMenge = 666);
+	virtual ostream& ostreamAusgabe(ostream&);	//Vererbung des Überladens
 
 private:
 	static int p_iMaxID;
@@ -38,3 +39,4 @@ protected:
 	virtual double dGeschwindigkeit();
 };
 
+ostream& operator << (ostream& out, Fahrzeug& Fahrzeug);
