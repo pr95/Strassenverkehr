@@ -53,16 +53,24 @@ void Fahrzeug::vInitialisierung()
 /*
 Ausgabe der Objektdaten in formatierter Form
 */
-void Fahrzeug::vAusgabe()
+//Ãœberladung von <<
+ostream& operator << (ostream& daten, Fahrzeug& fahrzeug)
 {
-	cout << setw(4) << resetiosflags(ios::right) << setiosflags(ios::left) << setfill(' ') 
+	return fahrzeug.ostreamAusgabe(daten);
+}
+
+//void Fahrzeug::vAusgabe()
+ostream& Fahrzeug::ostreamAusgabe(ostream& daten)
+{
+	daten << setw(4) << resetiosflags(ios::right) << setiosflags(ios::left) << setfill(' ') 
 		<< p_iID << setw(9) << setfill(' ') << p_sName << ":" << resetiosflags(ios::left) << setiosflags(ios::right) 
-		<< setw(8) << setfill(' ') << p_dMaxGeschwindigkeit << setw(8) << setfill(' ') << this->dGeschwindigkeit() << setw(11) << setfill(' ') << p_dGesamtStrecke;
+		<< setw(8) << setfill(' ') << p_dMaxGeschwindigkeit << setw(8) << setfill(' ') << this->dGeschwindigkeit() << setw(11) << setfill(' ') << p_dGesamtStrecke << endl;
+	return daten;
 }
 
 /*
 Aktualisiert die Gesamtstrecke nach um die im vergangenen Zeitraum abgefahrene Strecke.
-Prüft zuerst, ob Fahrzeug bereits in dem selben Zeitraum abgefertigt wurde über p_dZeit.
+PrÃ¼ft zuerst, ob Fahrzeug bereits in dem selben Zeitraum abgefertigt wurde Ã¼ber p_dZeit.
 */
 void Fahrzeug::vAbfertigung()
 {
@@ -79,7 +87,7 @@ void Fahrzeug::vAbfertigung()
 	p_dZeit = dGlobaleZeit;
 }
 
-//Default Funktion für alle Tochterklassen
+//Default Funktion fÃ¼r alle Tochterklassen
 double Fahrzeug::dTanken(double dMenge)
 {
 	return 0;
