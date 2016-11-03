@@ -39,4 +39,4 @@ protected:
 	virtual double dGeschwindigkeit();
 };
 
-ostream& operator << (ostream& out, Fahrzeug& Fahrzeug);
+ostream& operator << (ostream& daten, Fahrzeug& Fahrzeug);
